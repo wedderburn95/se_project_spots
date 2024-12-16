@@ -40,4 +40,6 @@ This project also introduces responsive page design for different devices, and h
 
 https://www.loom.com/share/d429d3696888413196eed40e695c0f11?sid=413de202-ef19-4cd1-8c75-a0e41d344b75
 
-Test
+## Link to my Github page
+
+https://wedderburn95.github.io/se_project_spots/
