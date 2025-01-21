@@ -1,3 +1,17 @@
+/* ToDo - finish styling the preview modal */
+/* div > ul {
+  . . .
+  visibility:hidden;
+  opacity:0;
+  transition:visibility 0s linear 0.5s,opacity 0.5s linear;
+}
+div:hover > ul {
+  visibility:visible;
+  opacity:1;
+  transition-delay:0s;
+} */
+/* TODO - make the preview modal responsive */
+
 .modal {
   position: fixed;
   top: 0;
@@ -81,20 +95,37 @@
   max-height: 80vh;
   object-fit: contain;
   border-radius: 8px;
+  width: 288px;
+
+  height: 426.57px;
+  top: 89px;
+  left: 16px;
+  gap: 0px;
+  border-radius: 4px 0px 0px 0px;
+  opacity: 0px;
 }
 
 .modal__caption {
   width: 119px;
   height: 24px;
-  background-color: rgba(33, 33, 33, 1) transparent;
+  background: rgb(33, 33, 33);
+  color: #fff;
   text-overflow: ellipsis;
   white-space: nowrap;
   /* overflow: hidden; */
   font-weight: 500;
   margin: 0;
-  max-width: 350px;
+  max-width: 850px;
   line-height: 24px;
   font-size: 20px;
+
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 }
 
 .modal__close-btn:hover {

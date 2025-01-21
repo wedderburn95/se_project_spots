@@ -1,5 +1,9 @@
 const initialCards = [
   {
+    name: "Golden Gate Bridge",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg",
+  },
+  {
     name: "Val Thorens",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
   },
@@ -30,7 +34,6 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const editProfileModal = document.querySelector("#modal-edit-profile");
 
 const modalcloseButton = editProfileModal.querySelector(".modal__close-btn");
-const cardImage = document.querySelector(".card__image");
 
 //find the form element
 const editFormElement = editProfileModal.querySelector(".modal__form");
@@ -56,7 +59,12 @@ const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 const cardModalBtn = document.querySelector(".profile__add-button");
 const cardLinkInput = cardModal.querySelector("#add-card-link-input");
 const cardNameInput = cardModal.querySelector("#add-card-name-input");
+
+//Select the modal
 const previewModal = document.querySelector("#preview-modal");
+const previewModalEl = previewModal.querySelector(".modal__image");
+const previewModalCaption = previewModal.querySelector(".modal__caption");
+const previewCloseBtn = previewModal.querySelector(".modal__close-btn");
 
 //To set the template element
 const cardTemplate = document.querySelector("#card-template");
@@ -93,16 +101,21 @@ function getCardelement(data) {
     cardLikedBtn.classList.toggle("card__like-button_liked");
   });
 
+  //add event listener for the card image
+  cardImage.addEventListener("click", () => {
+    openModal(previewModal);
+    previewModalEl.src = data.link;
+    previewModalEl.alt = data.link;
+    previewModalCaption.textContent = data.name;
+  });
+
+  previewCloseBtn.addEventListener("click", () => {
+    closeModal(previewModal);
+  });
+
   //return the ready HTML element with the filled-in data
   return cardElement;
 }
-
-//add event listener for the card image
-cardImage.addEventListener("click", () => {
-  openModal(previewModal);
-
-  getCardelement();
-});
 
 function openModal(modal) {
   // setvalue of name input to name element text content
