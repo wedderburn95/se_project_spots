@@ -1,4 +1,6 @@
 /* ToDo - finish styling the preview modal */
+/* transition: opacity 1s;
+  cursor: pointer; */
 /* div > ul {
   . . .
   visibility:hidden;
@@ -24,11 +26,14 @@ div:hover > ul {
   align-items: center;
   justify-content: center;
   visibility: hidden;
+  opacity: 0;
   padding: 0 16px;
+  transition: all 1s ease-out;
 }
 
 .modal_opened {
   visibility: visible;
+  opacity: 1;
 }
 
 /* .modal__closed {
@@ -76,7 +81,11 @@ div:hover > ul {
   cursor: pointer;
 }
 
-.modal__close_type_preview {
+.modal__close-btn:hover {
+  color: rgba(33, 33, 33, 1);
+  opacity: 100%;
+}
+.modal__close-btn_type_preview {
   background-image: url(../images/Icon-close-btn.svg);
   top: 0;
   right: -52px;
@@ -87,7 +96,11 @@ div:hover > ul {
   width: 40px;
   height: 40px;
   gap: 0px;
-  opacity: 1px;
+  opacity: 1;
+}
+
+.modal__close-btn_type_preview:hover {
+  opacity: 0.4;
 }
 
 .modal__image {
@@ -95,27 +108,24 @@ div:hover > ul {
   max-height: 80vh;
   object-fit: contain;
   border-radius: 8px;
-  width: 288px;
-
-  height: 426.57px;
-  top: 89px;
-  left: 16px;
-  gap: 0px;
-  border-radius: 4px 0px 0px 0px;
-  opacity: 0px;
+  width: 991.5px;
+  height: 661px;
+  /* top: 81px;
+  left: 224px; */
+  border-radius: 8px;
+  /* opacity: 0px; */
 }
 
 .modal__caption {
-  width: 119px;
+  width: fit-content;
   height: 24px;
+  padding: 0, 18px;
   background: rgb(33, 33, 33);
   color: #fff;
   text-overflow: ellipsis;
   white-space: nowrap;
   /* overflow: hidden; */
   font-weight: 500;
-  margin: 0;
-  max-width: 850px;
   line-height: 24px;
   font-size: 20px;
 
@@ -126,11 +136,6 @@ div:hover > ul {
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-}
-
-.modal__close-btn:hover {
-  color: rgba(33, 33, 33, 1);
-  opacity: 100%;
 }
 
 .modal__title {
@@ -211,6 +216,21 @@ div:hover > ul {
 
   .modal__submit-btn {
     width: 100%;
+  }
+
+  .modal__image {
+    width: 288px;
+    height: 192px;
+    border-radius: 4px;
+    gap: 8px;
+  }
+
+  .modal__close-btn_type_preview {
+    width: 40px;
+    height: 40px;
+    top: -120x;
+    left: 230px;
+    position: relative;
   }
 }
 
