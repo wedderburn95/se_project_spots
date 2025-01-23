@@ -58,8 +58,6 @@ div:hover > ul {
 
 .modal__content_type_preview {
   padding: 0;
-  max-width: 80vw;
-  max-height: 80vh;
   box-sizing: border-box;
   position: relative;
 }
@@ -108,19 +106,19 @@ div:hover > ul {
   max-height: 80vh;
   object-fit: contain;
   border-radius: 8px;
-  width: 991.5px;
-  height: 661px;
+  display: block;
   /* top: 81px;
   left: 224px; */
-  border-radius: 8px;
+
   /* opacity: 0px; */
 }
 
 .modal__caption {
   width: fit-content;
   height: 24px;
-  padding: 0, 18px;
+  padding: 4px 8px;
   background: rgb(33, 33, 33);
+  border-radius: 8px;
   color: #fff;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -128,10 +126,11 @@ div:hover > ul {
   font-weight: 500;
   line-height: 24px;
   font-size: 20px;
-
   font-family: Poppins;
   font-size: 20px;
   font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 0;
   line-height: 24px;
   text-align: left;
   text-underline-position: from-font;
@@ -218,19 +217,18 @@ div:hover > ul {
     width: 100%;
   }
 
-  .modal__image {
-    width: 288px;
-    height: 192px;
-    border-radius: 4px;
-    gap: 8px;
-  }
-
   .modal__close-btn_type_preview {
     width: 40px;
     height: 40px;
-    top: -120x;
-    left: 230px;
-    position: relative;
+    top: -38px;
+    right: -6px;
+  }
+}
+
+@media screen and (max-width: 372px) {
+  .modal__image {
+    max-width: 288px;
+    border-radius: 4px;
   }
 }
 
