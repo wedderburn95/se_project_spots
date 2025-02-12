@@ -1,3 +1,5 @@
+//TODO - pass settings object to the validation functionthat are called in this file
+
 const initialCards = [
   {
     name: "Golden Gate Bridge",
@@ -56,6 +58,7 @@ const descriptionInputElement = editProfileModal.querySelector(
 const cardModal = document.querySelector("#add-card-modal");
 // Setup another form element
 const cardForm = cardModal.querySelector(".modal__form");
+const cardSubmitBtn = cardModal.querySelector(".modal__submit-btn");
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 const profileAddButton = document.querySelector(".profile__add-button");
 const cardLinkInput = cardModal.querySelector("#add-card-link-input");
@@ -148,9 +151,9 @@ function handleCardSubmit(evt) {
   cardsList.prepend(cardElement);
 
   // closeModal(cardForm);
-
-  closeModal(cardModal);
   cardForm.reset();
+  disableBtn(cardSubmitBtn, settings);
+  closeModal(cardModal);
 }
 
 function handleFormSubmit(evt) {
@@ -169,6 +172,7 @@ function handleDeleteCard(evt) {
 profileEditButton.addEventListener("click", () => {
   nameInputElement.value = nameElement.textContent;
   descriptionInputElement.value = descriptionElement.textContent;
+  resetValidation(editFormElement, [nameInputElement, descriptionInputElement]);
   openModal(editProfileModal);
 });
 
