@@ -48,8 +48,12 @@
 }
 
 .card__like-button_liked {
-  background-image: url(../images/icon\ state\ liked.svg);
+  background-image: url(../images/Union.svg);
   opacity: 1;
+
+  background-color: transparent;
+  background-repeat: no-repeat;
+  /* background: none; */
 }
 
 .card__like-button_liked:hover {

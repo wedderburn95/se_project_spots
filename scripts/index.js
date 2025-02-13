@@ -77,10 +77,8 @@ const cardTemplate = document.querySelector("#card-template");
 //Create a function to call the card list
 const cardsList = document.querySelector(".cards__list");
 
-//Declare a getCardElement() function that accepts one parameter named data.
 //Functions
 function getCardelement(data) {
-  //This function is to get the data from the Object initial Cards
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
@@ -102,7 +100,6 @@ function getCardelement(data) {
 
   //add the event listener
   cardLikedBtn.addEventListener("click", () => {
-    //write code that handles the event
     cardLikedBtn.classList.toggle("card__like-button_liked");
   });
   deleteCardBtn.addEventListener("click", handleDeleteCard);
@@ -114,8 +111,6 @@ function getCardelement(data) {
     previewModalImageEl.alt = data.name;
     previewModalCaption.textContent = data.name;
   });
-
-  //return the ready HTML element with the filled-in data
   return cardElement;
 }
 
@@ -124,25 +119,37 @@ previewCloseBtn.addEventListener("click", () => {
 });
 
 function openModal(modal) {
-  // setvalue of name input to name element text content
-  // nameInputElement.value = nameElement.textContent;
-
-  // setvalue of title input to title element text content
-  // descriptionInputElement.value = descriptionElement.textContent;
-
-  //Add the Modal class(form popup)
   modal.classList.add("modal_opened");
+  // Add event listener to close modal on Escape key
+  document.addEventListener("keydown", closeOnEscape);
+  modal.addEventListener("mousedown", closeOnOverlay);
 }
 
-//Remove the Modal class function(form popup)
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  // Remove event listener when modal is closed
+  document.removeEventListener("keydown", closeOnEscape);
+  modal.removeEventListener("mousedown", closeOnOverlay);
+}
+
+function closeOnEscape(evt) {
+  if (evt.key === "Escape") {
+    const openModal = document.querySelector(".modal_opened");
+    if (openModal) {
+      closeModal(openModal);
+    }
+  }
+}
+
+function closeOnOverlay(evt) {
+  if (evt.target.classList.contains("modal_opened")) {
+    closeModal(evt.target);
+  }
 }
 
 function handleCardSubmit(evt) {
   evt.preventDefault();
-  // console.log(cardLinkInput);
-  // console.log(cardNameInput);
+
   const inputValues = {
     name: cardNameInput.value,
     link: cardLinkInput.value,
@@ -150,19 +157,17 @@ function handleCardSubmit(evt) {
   const cardElement = getCardelement(inputValues);
   cardsList.prepend(cardElement);
 
-  // closeModal(cardForm);
   cardForm.reset();
   disableBtn(cardSubmitBtn, settings);
   closeModal(cardModal);
 }
 
 function handleFormSubmit(evt) {
-  // Prevent default browser behavior
   evt.preventDefault();
 
   nameElement.textContent = nameInputElement.value;
   descriptionElement.textContent = descriptionInputElement.value;
-  //Calling the remove the Modal class function(form popup)
+
   closeModal(editProfileModal);
 }
 function handleDeleteCard(evt) {
@@ -190,12 +195,6 @@ cardModalCloseBtn.addEventListener("click", () => {
 
 editFormElement.addEventListener("submit", handleFormSubmit);
 cardForm.addEventListener("submit", handleCardSubmit);
-
-// for (i = 0; i < initialCards.length; i++) {
-//   const cardElement = getCardelement(initialCards[i]);
-//   //add to the DOM
-//   cardsList.prepend(cardElement);
-// }
 
 initialCards.forEach((item) => {
   const cardElement = getCardelement(item);

@@ -49,6 +49,7 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.disabled = false;
     //remove the disabled class
     buttonElement.classList.remove("button_disabled");
+    buttonElement.classList.add("modal__submit-btn_active");
   }
 };
 
@@ -56,6 +57,7 @@ const disableBtn = (buttonElement) => {
   buttonElement.disabled = true;
   //Add a modifier class to the buttnEl to make it grey
   //Don't forget the CSS
+  buttonElement.classList.remove("modal__submit-btn_active");
 };
 
 const resetValidation = (formEl, inputList) => {
