@@ -6,19 +6,22 @@
     <meta name="author" content="William Wedderburn" />
     <meta name="keywords" content="HTML, CSS, Responsive design" />
     <meta name="description" content="Spots interactive social media" />
-    <link rel="stylesheet" href="./pages/index.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
     <title>Spots</title>
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img src="./images/logo.svg" alt="Spot logo" class="header__logo" />
+        <img
+          src="<%=require('./images/logo.svg')%>"
+          alt="Spot logo"
+          class="header__logo"
+        />
       </header>
       <main class="content">
         <section class="profile">
           <img
-            src="./images/avatar.jpg"
+            src="<%=require('./images/avatar.jpg')%>"
             alt="Bessie Coleman"
             class="profile__avatar"
           />
@@ -26,12 +29,18 @@
             <h1 class="profile__name">Bessie Coleman</h1>
             <p class="profile__description">Civil Aviator</p>
             <button type="button" class="profile__edit-button">
-              <img src="./images/Pencil.svg.svg" alt="Pencil Icon" />
+              <img
+                src="<%=require('./images/Pencil.svg')%>"
+                alt="Pencil Icon"
+              />
               Edit Post
             </button>
           </div>
           <button type="button" class="profile__add-button">
-            <img src="./images/Plus-button.svg" alt="Pencil Icon" />
+            <img
+              src="<%=require('./images/Plus-button.svg')%>"
+              alt="Add Icon"
+            />
             New post
           </button>
         </section>
@@ -73,7 +82,7 @@
               <input
                 id="profile-name-input"
                 type="text"
-                class="modal__input modal__name_input"
+                class="modal__input"
                 placeholder="Type your Name"
                 name="name"
                 minlength="2"
@@ -99,12 +108,7 @@
                 class="modal__error"
               ></span>
             </label>
-            <button
-              type="submit"
-              class="modal__submit-btn modal__add-submit-btn"
-            >
-              Save
-            </button>
+            <button type="submit" class="modal__submit-btn">Save</button>
           </form>
         </div>
       </div>
@@ -146,12 +150,7 @@
               />
               <span id="add-card-name-input-error" class="modal__error"></span>
             </label>
-            <button
-              type="submit"
-              class="modal__submit-btn modal__add-submit-btn"
-            >
-              Save
-            </button>
+            <button type="submit" class="modal__submit-btn">Save</button>
           </form>
         </div>
       </div>
@@ -167,7 +166,5 @@
         <p class="modal__caption"></p>
       </div>
     </div>
-    <script defer src="./scripts/validation.js" class=""></script>
-    <script defer src="./scripts/index.js" class=""></script>
   </body>
 </html>

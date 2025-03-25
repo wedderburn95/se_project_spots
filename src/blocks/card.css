@@ -57,7 +57,7 @@
 }
 
 .card__like-button_liked:hover {
-  background-image: url(../images/icon\ state\ liked_hover.svg);
+  background-image: url(../images/liked_hover.svg);
 }
 
 .card__delete-button {

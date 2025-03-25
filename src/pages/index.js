@@ -1,3 +1,6 @@
+import { enableValidation, validationConfig } from "../scripts/validation.js";
+import "../pages/index.css";
+
 //TODO - pass settings object to the validation functionthat are called in this file
 
 const initialCards = [
@@ -162,7 +165,7 @@ function handleCardSubmit(evt) {
   closeModal(cardModal);
 }
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   nameElement.textContent = nameInputElement.value;
@@ -177,7 +180,11 @@ function handleDeleteCard(evt) {
 profileEditButton.addEventListener("click", () => {
   nameInputElement.value = nameElement.textContent;
   descriptionInputElement.value = descriptionElement.textContent;
-  resetValidation(editFormElement, [nameInputElement, descriptionInputElement]);
+  resetValidation(
+    editFormElement,
+    [nameInputElement, descriptionInputElement],
+    settings
+  );
   openModal(editProfileModal);
 });
 
@@ -193,10 +200,12 @@ cardModalCloseBtn.addEventListener("click", () => {
   closeModal(cardModal);
 });
 
-editFormElement.addEventListener("submit", handleFormSubmit);
+editFormElement.addEventListener("submit", handleProfileFormSubmit);
 cardForm.addEventListener("submit", handleCardSubmit);
 
 initialCards.forEach((item) => {
   const cardElement = getCardelement(item);
   cardsList.append(cardElement);
 });
+
+enableValidation(validationConfig);

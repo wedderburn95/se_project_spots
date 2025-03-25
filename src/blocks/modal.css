@@ -97,6 +97,10 @@ div:hover > ul {
   opacity: 1;
 }
 
+/* .modal__submit-btn_active {
+  opacity: 1;
+  background-color: transparent;
+} */
 .modal__close-btn_type_preview:hover {
   opacity: 0.4;
 }
@@ -168,14 +172,18 @@ div:hover > ul {
   padding: 18px 32px 18px 32px;
   gap: 8px;
   border-radius: 8px;
-  opacity: 0px;
+  opacity: 1;
   background-color: #212121;
   color: #fcf5e5;
   cursor: pointer;
 }
 
-.modal__add-submit-btn {
-  opacity: 50%;
+/* .modal__add-submit-btn {
+  opacity: 1;
+} */
+
+.modal__submit-btn_disabled {
+  opacity: 0.5;
 }
 
 .modal__input {
