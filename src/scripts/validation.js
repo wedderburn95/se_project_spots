@@ -36,7 +36,7 @@ function checkInputValidity(formEl, inputEl, config) {
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((input) => {
-    console.log(input);
+    // console.log(input);
     return !input.validity.valid;
   });
 };
@@ -45,17 +45,15 @@ const toggleButtonState = (inputList, buttonElement, config) => {
   // console.log(hasInvalidInput(inputList));
   if (hasInvalidInput(inputList)) {
     disableBtn(buttonElement, config);
-    // buttonElement.classList.add("button_disabled");
   } else {
     buttonElement.disabled = false;
     //remove the disabled class
 
     buttonElement.classList.remove(config.inactiveButtonClass);
-    // buttonElement.classList.add(config.inactiveButtonClass);
   }
 };
 
-const disableBtn = (buttonElement, config) => {
+export const disableBtn = (buttonElement, config) => {
   // console.log("is this firing");
   buttonElement.disabled = true;
   //Add a modifier class to the buttnEl to make it grey
@@ -63,7 +61,7 @@ const disableBtn = (buttonElement, config) => {
   buttonElement.classList.add(config.inactiveButtonClass);
 };
 
-const resetValidation = (formEl, inputList, config) => {
+export const resetValidation = (formEl, inputList, config) => {
   // console.log("resetValidation config:", config);
   inputList.forEach((input) => {
     hideInputError(formEl, input, config);
