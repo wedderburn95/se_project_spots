@@ -8,37 +8,43 @@ class Api {
   }
 
   getAppInfo() {
-    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-    // .then(([userInfo, cards]) => {
-    //   // console.log("Cards:", cards); // Debugging
-    //   cards.forEach((item) => {
-    //     const cardEl = getCardElement(item);
-    //     console.log("Generated Card:", cardEl); // Debugging
-    //     cardsList.append(cardEl);
-    //   });
-    // })
-    // .catch(console.error);
+    return Promise.all([this.getUserInfo(), this.getInitialCards()])
+      .then(([userInfo, cards]) => {
+        // console.log("Cards:", cards); // Debugging
+        if (!Array.isArray(cards)) {
+          console.error("Expected an array but received:", cards);
+          return;
+        }
+
+        return [userInfo, cards];
+      })
+      .catch(console.error);
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-    })
-      .then((res) => {
-        console.log("Raw response:", res);
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Error: ${res.status}`);
+    console.log("Fetching initial cards...");
+    return (
+      fetch(`${this._baseUrl}/cards`, {
+        headers: this._headers,
       })
-      .then((data) => {
-        console.log("Cards received:", data);
-        return data;
-      })
-      .catch((err) => console.error("API error:", err));
+        .then((res) => {
+          // console.log("Raw response:", res);
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Error: ${res.status}`);
+        })
+        // .then((data) => {
+        //   // console.log("Cards received:", data);
+        //   console.log("Cards received (should be array):", Array.isArray(data));
+        //   return data;
+        // })
+        .catch((err) => console.error("API error:", err))
+    );
   }
 
   getUserInfo() {
+    console.log("Fetching user info...");
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     }).then((res) => {

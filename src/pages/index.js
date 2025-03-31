@@ -5,15 +5,25 @@ import {
   disableBtn,
 } from "../scripts/validation.js";
 import "../pages/index.css";
-import Api from "../utils/Api.js";
+import Api from "../utils/api.js";
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "cd8e53f5-8bcb-4168-b603-8951dec3b757",
+    authorization: "46e55e32-d845-4a77-b65d-e15ed91b3740",
     "Content-Type": "application/json",
   },
 });
+
+api
+  .getInitialCards()
+  .then((cards) => {
+    cards.forEach((item) => {
+      const cardEl = getCardElement(item);
+      cardsList.append(cardEl);
+    });
+  })
+  .catch(console.error);
 
 api
   .getAppInfo()
@@ -180,20 +190,20 @@ function closeOnOverlay(evt) {
   }
 }
 
-function handleCardSubmit(evt) {
-  evt.preventDefault();
+// function handleCardSubmit(evt) {
+//   evt.preventDefault();
 
-  const inputValues = {
-    name: cardNameInput.value,
-    link: cardLinkInput.value,
-  };
-  const cardElement = getCardElement(inputValues);
-  cardsList.prepend(cardElement);
+//   const inputValues = {
+//     name: cardNameInput.value,
+//     link: cardLinkInput.value,
+//   };
+//   const cardElement = getCardElement(inputValues);
+//   cardsList.prepend(cardElement);
 
-  cardForm.reset();
-  disableBtn(cardSubmitBtn, validationConfig);
-  closeModal(cardModal);
-}
+//   cardForm.reset();
+//   disableBtn(cardSubmitBtn, validationConfig);
+//   closeModal(cardModal);
+// }
 
 // ToDo: add the api call to create a new card
 function handleAvatarSubmit(evt) {
@@ -253,13 +263,15 @@ function handleDeleteSubmit(evt) {
   evt.preventDefault();
   api
     .deleteCard(selectedCardId)
-    .then(() => {})
+    .then(() => {
+      selectedCard.remove(); // Remove the card element from the DOM
+      closeModal(deleteModalBtn); // Close the delete confirmation modal
+    })
     .catch(console.error);
 }
 
 function handleDeleteCard(cardElement, cardId) {
   // Open the delete confirmation modal
-  console.log(cardId);
   selectedCard = cardElement;
   selectedCardId = cardId;
   openModal(deleteModalBtn);
@@ -295,11 +307,8 @@ avatarModalCloseBtn.addEventListener("click", () => {
 });
 
 editFormElement.addEventListener("submit", handleProfileFormSubmit);
-cardForm.addEventListener("submit", handleCardSubmit);
+cardForm.addEventListener("submit", handleAddCardSubmit);
 
 deleteForm.addEventListener("submit", handleDeleteSubmit);
 
 enableValidation(validationConfig);
-
-// window.getCardElement = getCardElement;
-// window.cardsList = cardsList; // Also expose cardsList for testing
