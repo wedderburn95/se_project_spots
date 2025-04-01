@@ -1,17 +1,5 @@
 /* ToDo - finish styling the preview modal */
-/* transition: opacity 1s;
-  cursor: pointer; */
-/* div > ul {
-  . . .
-  visibility:hidden;
-  opacity:0;
-  transition:visibility 0s linear 0.5s,opacity 0.5s linear;
-}
-div:hover > ul {
-  visibility:visible;
-  opacity:1;
-  transition-delay:0s;
-} */
+
 /* TODO - make the preview modal responsive */
 
 .modal {
@@ -219,10 +207,6 @@ div:hover > ul {
   border: 1px solid #212121;
 }
 
-/* .modal__name_input:hover {
-  opacity: 100%;
-} */
-
 .modal__input_type_error {
   border: 1px solid rgba(255, 0, 0, 0.6);
 }
@@ -236,6 +220,20 @@ div:hover > ul {
   color: red;
   margin-top: 8px;
   /* TODO use correct font size and color */
+}
+
+.card__delete-btn {
+  display: block;
+  background-color: #ff6565;
+  color: #fcf5e5;
+  cursor: pointer;
+  gap: 8px;
+  height: Hug(52px) px;
+  opacity: 1;
+  padding: 18px 32px;
+  width: 156px;
+  width: Fixed(156px) px;
+  border: none;
 }
 
 @media screen and (max-width: 627px) {
@@ -271,12 +269,28 @@ div:hover > ul {
     top: -38px;
     right: -6px;
   }
+
+  .card__delete-btn {
+    width: 156px;
+    /* height: 52px; */
+    border-radius: 8px;
+
+    gap: 8px;
+  }
 }
 
 @media screen and (max-width: 372px) {
   .modal__image {
     max-width: 288px;
     border-radius: 4px;
+  }
+
+  .card__delete-btn {
+    max-width: 156;
+    height: 52;
+    border-radius: 8px;
+
+    gap: 8px;
   }
 }
 

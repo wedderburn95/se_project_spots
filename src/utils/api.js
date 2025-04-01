@@ -93,7 +93,8 @@ class Api {
   }
 
   // add a method to edit the avatar
-  editAvatar(avatar) {
+  editAvatar({ avatar }) {
+    // "avatar" was an object in the original code, but it should be a string. Destructuring it to get the string value.
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,

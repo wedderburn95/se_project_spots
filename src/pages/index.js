@@ -6,11 +6,12 @@ import {
 } from "../scripts/validation.js";
 import "../pages/index.css";
 import Api from "../utils/api.js";
+import { setButtonText } from "../utils/helper.js";
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "d12f4ca0-7155-425d-8a55-a0bff7fa72d3",
+    authorization: "0461a93f-e4a4-4710-9671-530f1a6885c6",
     "Content-Type": "application/json",
   },
 });
@@ -116,37 +117,31 @@ function getCardElement(data) {
   const cardLikedBtn = cardElement.querySelector(".card__like-button");
   const deleteCardBtn = cardElement.querySelector(".card__delete-button");
 
-  //if the card is liked, we want to make it look liked, by adding the correct class to the like button
-  if (data.likes.some((user) => user._id === api._userId)) {
-    cardLikedBtn.classList.add("card__like-button_liked");
-  }
-
-  function handleLikeCard(evt, id) {
-    const likeButton = evt.target;
-    const isLiked = likeButton.classList.contains("card__like-button_liked");
-
-    api
-      .handleLike(id, isLiked)
-      .then((updatedCard) => {
-        likeButton.classList.toggle("card__like-button_liked");
-      })
-      .catch((err) => {
-        console.error("Error updating like:", err);
-      });
-  }
-
   //assign  value to the name
   cardNameEL.textContent = data.name;
+  //check if the card is liked or not
 
   //assign  values to the image src and alt
   cardImage.src = data.link;
   cardImage.alt = data.name;
 
-  //add the event listener
-  cardLikedBtn.addEventListener("click", (evt) =>
-    handleLikeCard(evt, data._id)
-  );
+  // Safely retrieve and parse liked cards from localStorage
+  let likedCards = {};
 
+  try {
+    likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
+  } catch (error) {
+    console.error("Error parsing likedCards from localStorage:", error);
+    localStorage.setItem("likedCards", JSON.stringify({})); // Reset storage
+  }
+
+  // Apply liked state
+  if (likedCards[data._id]) {
+    cardLikedBtn.classList.add("card__like-button_liked");
+  }
+
+  //add the event listener
+  cardLikedBtn.addEventListener("click", (evt) => handleLikeCard(evt, data));
   deleteCardBtn.addEventListener("click", (evt) => {
     handleDeleteCard(cardElement, data._id);
   });
@@ -160,6 +155,28 @@ function getCardElement(data) {
   });
   // console.log("Generated Card:", cardElement); // Debugging
   return cardElement;
+}
+
+function handleLikeCard(evt, data) {
+  const isLiked = evt.target.classList.contains("card__like-button_liked");
+
+  api
+    .handleLike(data._id, isLiked)
+    .then(() => {
+      evt.target.classList.toggle("card__like-button_liked");
+
+      let likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
+
+      if (isLiked) {
+        delete likedCards[data._id];
+      } else {
+        likedCards[data._id] = true;
+      }
+      localStorage.setItem("likedCards", JSON.stringify(likedCards));
+    })
+    .catch((err) => {
+      console.error("Error updating like:", err);
+    });
 }
 
 previewCloseBtn.addEventListener("click", () => {
@@ -213,23 +230,29 @@ function closeOnOverlay(evt) {
 // ToDo: add the api call to create a new card
 function handleAvatarSubmit(evt) {
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Saving...", "Save");
   api
-    .editAvatar({ avatar: avatarForm.querySelector("#avatar-link").value })
+
+    .editAvatar({
+      avatar: avatarForm.querySelector("#profile-avatar-input").value,
+    })
     .then((data) => {
       document.querySelector(".profile__avatar").src = data.avatar;
       closeModal(avatarModal);
-    });
-  api
-    .editAvatar({ avatar: avatarForm.querySelector("#avatar-link").value })
-    .then((data) => {
-      document.querySelector(".profile__avatar").src = data.avatar;
-      closeModal(avatarModal);
+    })
+
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false, "Saving...", "Save");
     });
 }
 
 //ToDo: call the addCard method from the api class
 function handleAddCardSubmit(evt) {
   evt.preventDefault(); // Prevent the default form submission behavior
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Saving...", "Save");
   const inputValues = {
     name: cardNameInput.value,
     link: cardLinkInput.value,
@@ -245,11 +268,20 @@ function handleAddCardSubmit(evt) {
     })
     .catch((err) => {
       console.error(err); // Handle any errors that occur during the API call
+    })
+    .finally(() => {
+      setButtonText(submitBtn, false, "Saving...", "Save");
     });
 }
 
+// ToDo: implement loading text for all other form submissions
+
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+  // change text content to "Saving..." using setButtonText
+  const submitBtn = evt.submitter; // Get the submit button
+  setButtonText(submitBtn, true, "Saving...", "Save");
+
   api
     .editUserInfo({
       name: nameInputElement.value,
@@ -261,18 +293,28 @@ function handleProfileFormSubmit(evt) {
       descriptionElement.textContent = data.about;
       closeModal(editProfileModal);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      // use setButtonText to reset the button text
+      setButtonText(submitBtn, false, "Saving...", "Save");
+    });
 }
 
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Deleting...", "Delete");
   api
     .deleteCard(selectedCardId)
     .then(() => {
       selectedCard.remove(); // Remove the card element from the DOM
       closeModal(deleteModalBtn); // Close the delete confirmation modal
     })
-    .catch(console.error);
+    .catch(console.error)
+    .finally(() => {
+      // use setButtonText to reset the button text
+      setButtonText(submitBtn, false, "Deleting...", "Delete");
+    });
 }
 
 function handleDeleteCard(cardElement, cardId) {
