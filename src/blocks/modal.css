@@ -51,6 +51,7 @@
 
 .modal__close-btn {
   position: absolute;
+  background-image: url(../images/Icon-close-btn.svg);
   top: 32px;
   right: 50px;
   width: 40px;
@@ -72,8 +73,8 @@
 }
 .modal__close-btn_type_preview {
   background-image: url(../images/Icon-close-btn.svg);
-  top: 0;
-  right: -52px;
+  top: 32px;
+  right: 50x;
   /* justify-content: center; */
   /* border: none; */
   /* border: 2px solid rgba(255, 255, 255, 1); */
