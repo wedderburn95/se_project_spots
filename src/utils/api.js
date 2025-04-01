@@ -88,7 +88,7 @@ class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error: ${res.status}`); // return a rejected promise
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -106,7 +106,7 @@ class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error: ${res.status}`); // return a rejected promise
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -119,9 +119,25 @@ class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error: ${res.status}`); // return a rejected promise
+      return Promise.reject(`Error: ${res.status}`);
     });
   }
+
+  // add a method to like or unlike a card
+  handleLike(id, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+      method: !isLiked ? "PUT" : "DELETE",
+      headers: this._headers,
+    }).then((res) => {
+      // handle the response
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  // add a method to remove a like from a card
 }
 
 // other methods for working with the API

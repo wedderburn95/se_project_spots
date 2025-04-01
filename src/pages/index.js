@@ -10,20 +10,10 @@ import Api from "../utils/api.js";
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "46e55e32-d845-4a77-b65d-e15ed91b3740",
+    authorization: "d12f4ca0-7155-425d-8a55-a0bff7fa72d3",
     "Content-Type": "application/json",
   },
 });
-
-api
-  .getInitialCards()
-  .then((cards) => {
-    cards.forEach((item) => {
-      const cardEl = getCardElement(item);
-      cardsList.append(cardEl);
-    });
-  })
-  .catch(console.error);
 
 api
   .getAppInfo()
@@ -126,6 +116,25 @@ function getCardElement(data) {
   const cardLikedBtn = cardElement.querySelector(".card__like-button");
   const deleteCardBtn = cardElement.querySelector(".card__delete-button");
 
+  //if the card is liked, we want to make it look liked, by adding the correct class to the like button
+  if (data.likes.some((user) => user._id === api._userId)) {
+    cardLikedBtn.classList.add("card__like-button_liked");
+  }
+
+  function handleLikeCard(evt, id) {
+    const likeButton = evt.target;
+    const isLiked = likeButton.classList.contains("card__like-button_liked");
+
+    api
+      .handleLike(id, isLiked)
+      .then((updatedCard) => {
+        likeButton.classList.toggle("card__like-button_liked");
+      })
+      .catch((err) => {
+        console.error("Error updating like:", err);
+      });
+  }
+
   //assign  value to the name
   cardNameEL.textContent = data.name;
 
@@ -134,16 +143,12 @@ function getCardElement(data) {
   cardImage.alt = data.name;
 
   //add the event listener
-  cardLikedBtn.addEventListener("click", () => {
-    cardLikedBtn.classList.toggle("card__like-button_liked");
-  });
+  cardLikedBtn.addEventListener("click", (evt) =>
+    handleLikeCard(evt, data._id)
+  );
 
-  deleteCardBtn.addEventListener("click", () => {
-    if (data._id) {
-      handleDeleteCard(cardElement, data._id);
-    } else {
-      console.error("Card ID is undefined:", data);
-    }
+  deleteCardBtn.addEventListener("click", (evt) => {
+    handleDeleteCard(cardElement, data._id);
   });
 
   //add event listener for the card image
