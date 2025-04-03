@@ -28,17 +28,18 @@ api
       userInfo.about;
     // - set the user id
     api._userId = userInfo._id;
-    console.log("Cards received from API:", cards); // Debugging
 
     cards.forEach((item) => {
       const cardEl = getCardElement(item);
-      console.log("Appending Card:", cardEl); // Debugging
       cardsList.append(cardEl);
     });
     // - return the user data and the cards data
     return { userInfo, cards };
   })
-  .catch(console.error);
+  .catch((err) => {
+    console.error("Error fetching app info:", err);
+    // Show an error popup or alert (if applicable)
+  });
 
 //Profile elements
 const profileEditButton = document.querySelector(".profile__edit-button");
@@ -69,6 +70,7 @@ let selectedCardId;
 
 //Edit button
 const cardModal = document.querySelector("#add-card-modal");
+
 // Setup another form element
 const cardForm = cardModal.querySelector(".modal__form");
 const cardSubmitBtn = cardModal.querySelector(".modal__submit-btn");
@@ -105,6 +107,7 @@ const cardsList = document.querySelector(".cards__list");
 
 //Functions
 function getCardElement(data) {
+  console.log(data);
   const cardElement = cardTemplate.content
     .querySelector(".card")
     .cloneNode(true);
@@ -136,7 +139,7 @@ function getCardElement(data) {
   }
 
   // Apply liked state
-  if (likedCards[data._id]) {
+  if (data.isLiked) {
     cardLikedBtn.classList.add("card__like-button_liked");
   }
 
@@ -162,17 +165,8 @@ function handleLikeCard(evt, data) {
 
   api
     .handleLike(data._id, isLiked)
-    .then(() => {
+    .then((newCard) => {
       evt.target.classList.toggle("card__like-button_liked");
-
-      let likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
-
-      if (isLiked) {
-        delete likedCards[data._id];
-      } else {
-        likedCards[data._id] = true;
-      }
-      localStorage.setItem("likedCards", JSON.stringify(likedCards));
     })
     .catch((err) => {
       console.error("Error updating like:", err);
@@ -211,21 +205,6 @@ function closeOnOverlay(evt) {
     closeModal(evt.target);
   }
 }
-
-// function handleCardSubmit(evt) {
-//   evt.preventDefault();
-
-//   const inputValues = {
-//     name: cardNameInput.value,
-//     link: cardLinkInput.value,
-//   };
-//   const cardElement = getCardElement(inputValues);
-//   cardsList.prepend(cardElement);
-
-//   cardForm.reset();
-//   disableBtn(cardSubmitBtn, validationConfig);
-//   closeModal(cardModal);
-// }
 
 // ToDo: add the api call to create a new card
 function handleAvatarSubmit(evt) {
@@ -293,7 +272,10 @@ function handleProfileFormSubmit(evt) {
       descriptionElement.textContent = data.about;
       closeModal(editProfileModal);
     })
-    .catch(console.error)
+    .catch((err) => {
+      console.error("Error updating profile:", err);
+      // Show an error popup or alert (if applicable)
+    })
     .finally(() => {
       // use setButtonText to reset the button text
       setButtonText(submitBtn, false, "Saving...", "Save");
@@ -310,7 +292,10 @@ function handleDeleteSubmit(evt) {
       selectedCard.remove(); // Remove the card element from the DOM
       closeModal(deleteModalBtn); // Close the delete confirmation modal
     })
-    .catch(console.error)
+    .catch((err) => {
+      console.error("Error deleting card:", err);
+      // Show an error popup or alert (if applicable)
+    })
     .finally(() => {
       // use setButtonText to reset the button text
       setButtonText(submitBtn, false, "Deleting...", "Delete");
@@ -336,7 +321,24 @@ profileEditButton.addEventListener("click", () => {
   openModal(editProfileModal);
 });
 
+const modalCancelBtn = document.querySelector(
+  "#delete-modal .modal__cancel-btn"
+);
+
+// Select the modal and close button for the "New Post" modal
+const addCardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
+
+// Add event listener to close the "New Post" modal when the close button is clicked
+addCardModalCloseBtn.addEventListener("click", () => {
+  closeModal(cardModal);
+});
+
+modalCancelBtn.addEventListener("click", () => {
+  closeModal(deleteModalBtn);
+});
+
 editProfileModalCloseButton.addEventListener("click", () => {
+  console.log("Close button clicked!");
   closeModal(editProfileModal);
 });
 

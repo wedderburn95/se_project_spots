@@ -7,52 +7,32 @@ class Api {
     // constructor body
   }
 
-  getAppInfo() {
-    return Promise.all([this.getUserInfo(), this.getInitialCards()])
-      .then(([userInfo, cards]) => {
-        // console.log("Cards:", cards); // Debugging
-        if (!Array.isArray(cards)) {
-          console.error("Expected an array but received:", cards);
-          return;
-        }
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  }
 
-        return [userInfo, cards];
-      })
-      .catch(console.error);
+  getAppInfo() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+    // .then(([userInfo, cards]) => {
+    //   if (!Array.isArray(cards)) {
+    //     console.error("Expected an array but received:", cards);
+    //     return;
+    //   }
+    //   return [userInfo, cards];
+    // })
   }
 
   getInitialCards() {
-    console.log("Fetching initial cards...");
-    return (
-      fetch(`${this._baseUrl}/cards`, {
-        headers: this._headers,
-      })
-        .then((res) => {
-          // console.log("Raw response:", res);
-          if (res.ok) {
-            return res.json();
-          }
-          return Promise.reject(`Error: ${res.status}`);
-        })
-        // .then((data) => {
-        //   // console.log("Cards received:", data);
-        //   console.log("Cards received (should be array):", Array.isArray(data));
-        //   return data;
-        // })
-        .catch((err) => console.error("API error:", err))
-    );
+    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
+      .then(this._checkResponse)
+      .catch((err) => console.error("API error:", err));
   }
 
   getUserInfo() {
     console.log("Fetching user info...");
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // add a method to add a new card
@@ -65,13 +45,7 @@ class Api {
         name,
         link,
       }),
-    }).then((res) => {
-      // handle the response
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`); // return a rejected promise
-    });
+    }).then(this._checkResponse);
   }
 
   editUserInfo({ name, about }) {
@@ -83,13 +57,7 @@ class Api {
         name,
         about,
       }),
-    }).then((res) => {
-      // handle the response
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // add a method to edit the avatar
@@ -102,26 +70,14 @@ class Api {
       body: JSON.stringify({
         avatar,
       }),
-    }).then((res) => {
-      // handle the response
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then((res) => {
-      // handle the response
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // add a method to like or unlike a card
@@ -129,19 +85,11 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: !isLiked ? "PUT" : "DELETE",
       headers: this._headers,
-    }).then((res) => {
-      // handle the response
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   // add a method to remove a like from a card
 }
-
-// other methods for working with the API
 
 // export the class
 export default Api;
