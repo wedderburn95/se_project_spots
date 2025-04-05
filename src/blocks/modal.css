@@ -3,6 +3,7 @@
 /* TODO - make the preview modal responsive */
 
 .modal {
+  font-family: Poppins, Arial, Helvetica, sans-serif;
   position: fixed;
   top: 0;
   left: 0;
@@ -47,8 +48,8 @@
 
 .modal__close-btn {
   position: absolute;
-  background-image: url(../images/Icon-close-btn.svg);
-  top: 32px;
+  background-image: url(../images/X_logo.svg);
+  top: 30px;
   right: 50px;
   width: 40px;
   height: 40px;
@@ -58,9 +59,11 @@
   height: 40px;
   gap: 0px;
   opacity: 40%;
-  background-color: #fff;
+  background-color: transparent;
+  color: #fff;
   border: none;
   cursor: pointer;
+  background-repeat: no-repeat;
 }
 
 .modal__close-btn:hover {
@@ -69,17 +72,37 @@
 }
 .modal__close-btn_type_preview {
   background-image: url(../images/Icon-close-btn.svg);
-  top: 32px;
-  right: 50x;
+  top: 0;
+  right: -52px;
   background-color: transparent;
   width: 40px;
   height: 40px;
   gap: 0px;
   opacity: 1;
+  color: #fff;
 }
 
 .modal__close-btn_type_preview:hover {
   opacity: 0.4;
+}
+
+.modal__close-btn_type_delete {
+  position: absolute;
+  background-image: url(../images/Group-27.svg);
+  top: 14px;
+  right: -52px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  gap: 0px;
+  opacity: 40%;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 .modal__image {

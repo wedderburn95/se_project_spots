@@ -13,19 +13,12 @@ class Api {
 
   getAppInfo() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
-    // .then(([userInfo, cards]) => {
-    //   if (!Array.isArray(cards)) {
-    //     console.error("Expected an array but received:", cards);
-    //     return;
-    //   }
-    //   return [userInfo, cards];
-    // })
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
-      .then(this._checkResponse)
-      .catch((err) => console.error("API error:", err));
+    return fetch(`${this._baseUrl}/cards`, { headers: this._headers }).then(
+      this._checkResponse
+    );
   }
 
   getUserInfo() {

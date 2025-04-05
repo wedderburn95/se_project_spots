@@ -21,11 +21,10 @@ api
   .then(([userInfo, cards]) => {
     //Handle the user's information
     // - set the src of the avatar image
-    document.querySelector(".profile__avatar").src = userInfo.avatar;
+    profileAvatar.src = userInfo.avatar;
     // - set the text content of both the name and description
-    document.querySelector(".profile__name").textContent = userInfo.name;
-    document.querySelector(".profile__description").textContent =
-      userInfo.about;
+    nameElement.textContent = userInfo.name;
+    descriptionElement.textContent = userInfo.about;
     // - set the user id
     api._userId = userInfo._id;
 
@@ -47,6 +46,8 @@ const avatarModalBtn = document.querySelector(".profile__avatar-btn");
 const editProfileModal = document.querySelector("#modal-edit-profile");
 const editProfileModalCloseButton =
   editProfileModal.querySelector(".modal__close-btn");
+const profileAvatar = document.querySelector(".profile__avatar");
+// console.log(profileAvatar);
 
 //find the form element
 const editFormElement = editProfileModal.querySelector(".modal__form");
@@ -80,6 +81,7 @@ const profileAddButton = document.querySelector(".profile__add-button");
 //Select the modal delete button
 const deleteModalBtn = document.querySelector("#delete-modal");
 const deleteForm = deleteModalBtn.querySelector(".modal__form");
+const deleteModalCloseBtn = deleteModalBtn.querySelector(".modal__close-btn");
 
 //Select the avatar button
 // Avatar form elements
@@ -88,6 +90,7 @@ const avatarForm = avatarModal.querySelector(".modal__form");
 const avatarSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
 const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const avatarAddButton = document.querySelector(".profile__avatar-edit-button");
+const avatarInput = avatarModal.querySelector("#profile-avatar-input");
 
 const cardLinkInput = cardModal.querySelector("#add-card-link-input");
 const cardNameInput = cardModal.querySelector("#add-card-name-input");
@@ -131,12 +134,12 @@ function getCardElement(data) {
   // Safely retrieve and parse liked cards from localStorage
   let likedCards = {};
 
-  try {
-    likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
-  } catch (error) {
-    console.error("Error parsing likedCards from localStorage:", error);
-    localStorage.setItem("likedCards", JSON.stringify({})); // Reset storage
-  }
+  // try {
+  //   likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
+  // } catch (error) {
+  //   console.error("Error parsing likedCards from localStorage:", error);
+  //   localStorage.setItem("likedCards", JSON.stringify({})); // Reset storage
+  // }
 
   // Apply liked state
   if (data.isLiked) {
@@ -214,7 +217,7 @@ function handleAvatarSubmit(evt) {
   api
 
     .editAvatar({
-      avatar: avatarForm.querySelector("#profile-avatar-input").value,
+      avatar: avatarInput.value,
     })
     .then((data) => {
       document.querySelector(".profile__avatar").src = data.avatar;
@@ -353,6 +356,10 @@ avatarForm.addEventListener("submit", handleAvatarSubmit);
 
 avatarModalCloseBtn.addEventListener("click", () => {
   closeModal(avatarModal);
+});
+
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModalBtn);
 });
 
 editFormElement.addEventListener("submit", handleProfileFormSubmit);
