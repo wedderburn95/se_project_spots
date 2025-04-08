@@ -1,68 +1,70 @@
-const settings = {
+export const validationConfig = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__submit-btn",
-  inactiveButtonClass: "modal__button_disabled",
+  inactiveButtonClass: "modal__submit-btn_disabled",
   inputErrorClass: "modal__input_type_error",
   // errorClass: "modal__error_visible",
 };
 
 //The showInputError will display any errors under the input because the span ID's all have the name of the input plus "-error"
-const showInputError = (formEl, inputEl, errorMsg) => {
+const showInputError = (formEl, inputEl, errorMsg, config) => {
   console.log(errorMsg);
-  const errorMsgEl = document.querySelector(`#${inputEl.id}-error`);
+  const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   errorMsgEl.textContent = errorMsg;
-  inputEl.classList.add(settings.inputErrorClass);
+  inputEl.classList.add(config.inputErrorClass);
   //config.inputErrorClass
   // errorMsgEl.classList.add("");
 };
 
-const hideInputError = (formEl, inputEl, errorMsg) => {
+const hideInputError = (formEl, inputEl, config) => {
   const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
   errorMsgEl.textContent = "";
-  inputEl.classList.remove(settings.inputErrorClass);
+  console.log(config);
+  inputEl.classList.remove(config.inputErrorClass);
   //config.inputErrorClass
 };
 
-function checkInputValidity(formEl, inputEl) {
+function checkInputValidity(formEl, inputEl, config) {
   // console.log(inputEl.validationMessage);
   if (!inputEl.validity.valid) {
-    //The error message was not showing because enableValidationMessage is not a built-in property
-    showInputError(formEl, inputEl, inputEl.validationMessage);
+    showInputError(formEl, inputEl, inputEl.validationMessage, config);
   } else {
-    hideInputError(formEl, inputEl);
+    hideInputError(formEl, inputEl, config);
   }
 }
 
 const hasInvalidInput = (inputList) => {
   return inputList.some((input) => {
+    // console.log(input);
     return !input.validity.valid;
   });
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
-  console.log(hasInvalidInput(inputList));
+const toggleButtonState = (inputList, buttonElement, config) => {
+  // console.log(hasInvalidInput(inputList));
   if (hasInvalidInput(inputList)) {
-    disableBtn(buttonElement);
-    // buttonElement.classList.add("button_disabled");
+    disableBtn(buttonElement, config);
   } else {
     buttonElement.disabled = false;
     //remove the disabled class
-    buttonElement.classList.remove("button_disabled");
-    buttonElement.classList.add("modal__submit-btn_active");
+
+    buttonElement.classList.remove(config.inactiveButtonClass);
   }
 };
 
-const disableBtn = (buttonElement) => {
+export const disableBtn = (buttonElement, config) => {
+  // console.log("is this firing");
   buttonElement.disabled = true;
   //Add a modifier class to the buttnEl to make it grey
   //Don't forget the CSS
-  buttonElement.classList.remove("modal__submit-btn_active");
+  buttonElement.classList.add(config.inactiveButtonClass);
 };
 
-const resetValidation = (formEl, inputList) => {
+export const resetValidation = (formEl, inputList, config) => {
+  // console.log("resetValidation config:", config);
   inputList.forEach((input) => {
-    hideInputError(formEl, input);
+    hideInputError(formEl, input, config);
   });
 };
 
@@ -73,10 +75,11 @@ const setEventListeners = (formEl, config) => {
   const buttonElement = formEl.querySelector(config.submitButtonSelector);
 
   // TODO - handle initial states
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, config);
 
   inputList.forEach((inputEl) => {
     inputEl.addEventListener("input", function () {
+      // console.log(formEl, inputEl, config);
       checkInputValidity(formEl, inputEl, config);
       toggleButtonState(inputList, buttonElement, config);
     });
@@ -84,11 +87,11 @@ const setEventListeners = (formEl, config) => {
 };
 
 //The enableValidation code  block grabs all of the forms in HTML
-const enableValidation = (config) => {
-  const formList = document.querySelectorAll(config.formSelector);
+export const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formEl) => {
     setEventListeners(formEl, config);
   });
 };
 
-enableValidation(settings);
+enableValidation(validationConfig);

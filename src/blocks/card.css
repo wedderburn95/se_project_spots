@@ -57,7 +57,7 @@
 }
 
 .card__like-button_liked:hover {
-  background-image: url(../images/icon\ state\ liked_hover.svg);
+  background-image: url(../images/liked_hover.svg);
 }
 
 .card__delete-button {
@@ -66,8 +66,8 @@
   height: 32px;
   top: 10px;
   left: 371px;
-  gap: 0px;
-  opacity: 0px;
+  color: #ff6565;
+
   cursor: pointer;
   position: absolute;
   border: none;
