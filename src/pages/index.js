@@ -134,13 +134,6 @@ function getCardElement(data) {
   // Safely retrieve and parse liked cards from localStorage
   let likedCards = {};
 
-  // try {
-  //   likedCards = JSON.parse(localStorage.getItem("likedCards")) || {};
-  // } catch (error) {
-  //   console.error("Error parsing likedCards from localStorage:", error);
-  //   localStorage.setItem("likedCards", JSON.stringify({})); // Reset storage
-  // }
-
   // Apply liked state
   if (data.isLiked) {
     cardLikedBtn.classList.add("card__like-button_liked");

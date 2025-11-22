@@ -35,5 +35,20 @@
     "webpack-cli": "4.10.0",
     "webpack-dev-server": "4.9.3"
   },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "static-build": {
+    "distDir": "dist"
+  },
   "homepage": "https://github.com/wedderburn95/se_project_spots#readme"
 }
