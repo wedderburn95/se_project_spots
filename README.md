@@ -41,4 +41,5 @@ This project also introduces responsive page design for different devices, and h
 https://wedderburn95.github.io/se_project_spots/
 
 ## Link to the website
-se-project-spots-git-main-williams-projects-c348079e.vercel.app
+[se-project-spots-git-main-williams-projects-c348079e.vercel.app](https://se-project-spots-k7x9uwno6-williams-projects-c348079e.vercel.app/)
+
