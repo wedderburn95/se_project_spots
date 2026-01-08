@@ -5,19 +5,93 @@
   max-width: 1280px;
   margin: 0 auto;
 }
-.profile__avatar {
-  height: 190px;
-  width: 190px;
+
+.profile__avatar-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 20px;
   /* margin-bottom: 20px; */
+}
+
+.profile__avatar-btn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  /* gap: 8px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  /* gap: 8px; */
+  visibility: hidden;
+  background: none;
+  border: none;
+}
+
+.profile__edit-avatar {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 12px;
+}
+
+.profile__avatar-btn-text {
+  color: white;
+  width: auto;
+  height: auto;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* gap: 8px; */
+  background: none;
+  margin-bottom: 12px;
+}
+
+.profile__avatar-container:hover .profile__avatar-btn {
+  visibility: visible;
+  cursor: pointer;
+  background-color: rgba(33, 33, 33, 0.4);
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.profile__avatar {
+  /* position: relative; */
+  height: 190px;
+  width: 190px;
+  display: block;
+  /* justify-content: center;
+  align-items: center; */
   border-radius: 8px;
   object-fit: cover;
+  z-index: auto;
 }
+
+/* .profile__avatar-btn::after {
+  content: "Edit Avatar";
+  width: auto;
+  height: auto;
+
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+} */
 
 .profile__edit-button {
   font-weight: 500;
   margin-top: auto;
-  /* margin-bottom: 20px; */
   background-color: #fcf5e5;
   border: none;
   width: 107.34px;
@@ -35,6 +109,10 @@
   opacity: 100%;
 }
 
+/* .profile__edit-icon {
+  margin: 36px 12px;
+} */
+
 .profile__column {
   display: flex;
   flex-direction: column;
@@ -50,6 +128,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 288px;
 }
@@ -60,6 +139,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   max-width: 420px;
 }
@@ -91,6 +171,24 @@
     align-items: center;
     text-align: center;
     padding-top: 20px;
+  }
+
+  .profile__avatar-btn {
+    visibility: visible;
+  }
+
+  .profile__avatar-container::after {
+    /* set content of ::after element to empty string */
+    content: "";
+    /* set display to block to make it take up space */
+    display: block;
+    /* set width and height to 100% of the parent element */
+    width: 100%;
+    height: 100%;
+    margin-top: 100px;
+    position: relative;
+
+    /* Still need to fix this */
   }
 
   .profile__name {
