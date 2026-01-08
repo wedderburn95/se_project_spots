@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="William Wedderburn" />
+    <meta name="keywords" content="HTML, CSS, Responsive design" />
+    <meta name="description" content="Spots interactive social media" />
+    <link rel="stylesheet" href="./pages/index.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <title>Spots</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <img src="./images/logo.svg" alt="Spot logo" class="header__logo" />
+      </header>
+      <main class="content">
+        <section class="profile">
+          <img
+            src="./images/avatar.jpg"
+            alt="Bessie Coleman"
+            class="profile__avatar"
+          />
+          <div class="profile__column">
+            <h1 class="profile__name">Bessie Coleman</h1>
+            <p class="profile__description">Civil Aviator</p>
+            <button type="button" class="profile__edit-button">
+              <img src="./images/Pencil.svg.svg" alt="Pencil Icon" />
+              Edit Post
+            </button>
+          </div>
+          <button type="button" class="profile__add-button">
+            <img src="./images/Plus-button.svg" alt="Pencil Icon" />
+            New post
+          </button>
+        </section>
+        <section class="cards page__section">
+          <ul class="cards__list">
+            <template id="card-template">
+              <li class="card">
+                <img class="card__image" src="" alt="" />
+                <div class="card__content">
+                  <h2 class="card__title"></h2>
+                  <button
+                    aria-label="Like Card"
+                    type="button"
+                    class="card__like-button"
+                  ></button>
+                  <button
+                    aria-label="Delete button"
+                    type="button"
+                    class="card__delete-button"
+                  ></button>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </section>
+      </main>
+      <footer class="footer">
+        <p class="footer__copyright">2023 &copy; Spots - William Wedderburn</p>
+      </footer>
+      <div class="modal" id="modal-edit-profile">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn">
+            <img src="./images/X_logo.svg" alt="close-logo" />
+          </button>
+          <h2 class="modal__title">Edit Profile</h2>
+          <form class="modal__form" id="edit-profile">
+            <label for="profile-name-input" class="modal__label">
+              Name
+              <input
+                id="profile-name-input"
+                type="text"
+                class="modal__input modal__name_input"
+                placeholder="Type your Name"
+                name="name"
+                minlength="2"
+                maxlength="40"
+                required
+              />
+              <span id="profile-name-input-error" class="modal__error"></span>
+            </label>
+            <label for="profile-description-input" class="modal__label">
+              Description
+              <input
+                id="profile-description-input"
+                type="text"
+                class="modal__input"
+                placeholder="Describe yourself"
+                name="description"
+                minlength="2"
+                maxlength="200"
+                required
+              />
+              <span
+                id="profile-description-input-error"
+                class="modal__error"
+              ></span>
+            </label>
+            <button
+              type="submit"
+              class="modal__submit-btn modal__add-submit-btn"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="add-card-modal">
+        <div class="modal__container">
+          <button
+            aria-label="close modal"
+            class="modal__close-btn"
+            type="button"
+          >
+            <img src="./images/X_logo.svg" alt="close-logo" />
+          </button>
+          <h2 class="modal__title">New Post</h2>
+          <form class="modal__form" id="add-card-form" novalidate>
+            <label for="add-card-link-input" class="modal__label">
+              Image Link
+              <input
+                id="add-card-link-input"
+                name="link"
+                class="modal__input"
+                placeholder="Paste a  link to the picture"
+                type="url"
+                required
+              />
+              <span id="add-card-link-input-error" class="modal__error"></span>
+            </label>
+            <label for="add-card-name-input" class="modal__label">
+              Caption
+              <input
+                id="add-card-name-input"
+                name="name"
+                class="modal__input"
+                placeholder="Type your caption"
+                type="text"
+                minlength="2"
+                maxlength="30"
+                required
+              />
+              <span id="add-card-name-input-error" class="modal__error"></span>
+            </label>
+            <button
+              type="submit"
+              class="modal__submit-btn modal__add-submit-btn"
+            >
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="preview-modal">
+      <div class="modal__content modal__content_type_preview">
+        <button
+          aria-label="close modal"
+          class="modal__close-btn modal__close-btn_type_preview"
+          type="button"
+        ></button>
+        <img class="modal__image" src="" alt="" />
+        <p class="modal__caption"></p>
+      </div>
+    </div>
+    <script defer src="./scripts/validation.js" class=""></script>
+    <script defer src="./scripts/index.js" class=""></script>
+  </body>
+</html>
